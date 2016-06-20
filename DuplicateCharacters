@@ -1,0 +1,18 @@
+// Design an algorithm and write code to remove the duplicate characters in a string without using any additional buffer.
+// note: One or two additional variables are fine. An extra copy of the array is not.
+//FOLLOW UP
+//Write the test cases for this method
+
+public class DuplicateCharacters{
+
+    public String DuplicateCharacters(String s){
+      StringBuilder noRepeats = new StringBuilder();
+
+      for(int i = 0; i < s.length(); i++){
+        String unique = s.subString(i, i+1);
+        if(noRepeats.indexOf(unique) == 1){
+          noRepeats.append(unique);
+        }
+      }
+      return noRepeats.toString();
+}
