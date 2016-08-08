@@ -43,8 +43,21 @@ public class RedditInterview{
     //   System.out.println(commonElemList.get(i));
     // }
 
-    int[] test7 = {1,2,3,4,5,6,7,90};
-    System.out.println(binSearchSorted(test7, 90));
+    //int[] test7 = {1,2,3,4,5,6,7,90};
+    //System.out.println(binSearchSorted(test7, 90));
+
+    // int[] test8 =  {5,6,7,8,1,2,3};
+    // System.out.println(binSearchRotated(test8, 10));
+    // System.out.println(binSearchRotated(test8, 6));
+    //
+    // dynamicPrime(5);
+
+    //binaryInt(10);
+    //System.out.println(nonRepeated("ejk;lkjeek"));
+    //reverseIter("powwww");
+    //System.out.println(isAnagram("poop", "opop"));
+    //System.out.println(isPalindrome("poip"));
+    //System.out.println(isUnique("dfa"));
   }
 
   //Find the most frequent integer in an array
@@ -227,5 +240,125 @@ public class RedditInterview{
       return -1; //key cannot be greater than rotate index (end of the array)
     }
     return index;
+  }
+
+  //Use dynamic programming to find the first X prime numbers
+  public static int[] dynamicPrime(int n){
+    int[] primes = new int[n];
+    int primeCount = 1;
+    primes[0] = 2;
+    for(int i = 3; i < n; i++){
+      boolean isPrime = false;
+      if(i%2==0){
+        continue;
+      }
+
+      for (int j = 0; j < primeCount; j++) {
+            if (i % primes[j] == 0) {
+                isPrime = false;
+            }
+        }
+      if (isPrime) {
+          primes[primeCount++] = i;
+        }
+    }
+    for(int i = 0; i < primes.length; i++){
+      System.out.println(primes[i]);
+    }
+    return primes;
+  }
+
+  //Write a function that prints out the binary form of an int
+  public static void binaryInt(int n){
+    StringBuilder binaryForm = new StringBuilder();
+    while(n != 0){
+      if((n&1) == 1){
+        binaryForm.append(1);
+      } else {
+        binaryForm.append(0);
+      }
+      n>>=1; //divide
+    }
+    System.out.println(binaryForm.reverse());
+  }
+
+  //Find the first non-repeated character in a String
+  public static char nonRepeated(String s){
+    char firstNon = ' ';
+    int length = s.length();
+    for(int i = 0; i < length-1; i++){
+      if(s.charAt(i) != s.charAt(i+1)){
+         firstNon = s.charAt(i);
+      }
+    }
+    return firstNon;
+  }
+
+  //Reverse a String iteratively and recursively
+  public static void reverseIter(String s){
+    StringBuilder sBuild = new StringBuilder();
+    int max = s.length()-1;
+    for(int i = max; i >= 0; i--){
+      sBuild.append(s.charAt(i));
+    }
+    System.out.println(sBuild);
+  }
+
+  public static String reverseRecurse(String s){
+    String reverse = "";
+    if(s.length() < 2){
+      return s;
+    } else {
+      reverse += s.charAt(s.length()-1)
+                    +reverseRecurse(s.substring(0,s.length()-1));
+            return reverse;
+   }
+  }
+
+  //Determine if 2 Strings are anagrams
+  public static boolean isAnagram(String a, String b){
+    if(a.length() != b.length()){
+      return false;
+    }
+    List<Character> aList = new ArrayList<Character>();
+    List<Character> bList = new ArrayList<Character>();
+
+    for(int i = 0; i < a.length(); i++){
+      aList.add(a.charAt(i));
+      bList.add(b.charAt(i));
+    }
+
+    Collections.sort(aList);
+    Collections.sort(bList);
+
+    for(int j = 0; j < a.length(); j++){
+      if(aList.get(j) != bList.get(j)){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  //Check if String is a palindrome
+  public static boolean isPalindrome(String s){
+    for(int i = 0; i < s.length()/2; i++){
+      if(s.charAt((s.length()-1)-i) != s.charAt(i)){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  //Check if a String is composed of all unique characters
+  public static boolean isUnique(String s){
+    HashMap<Character, Integer> uniqueHash = new HashMap<Character, Integer>();
+    for(int i = 0; i < s.length(); i++){
+      if(uniqueHash.get(s.charAt(i)) != null){
+        return false;
+      }else{
+        uniqueHash.put(s.charAt(i), 1);
+      }
+    }
+    return true;
   }
 }
