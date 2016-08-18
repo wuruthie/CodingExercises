@@ -58,6 +58,8 @@ public class RedditInterview{
     //System.out.println(isAnagram("poop", "opop"));
     //System.out.println(isPalindrome("poip"));
     //System.out.println(isUnique("dfa"));
+    //System.out.println(intOrDouble("123.34"));
+    //System.out.println(intOrDouble("12334"));
   }
 
   //Find the most frequent integer in an array
@@ -360,5 +362,35 @@ public class RedditInterview{
       }
     }
     return true;
+  }
+
+  //Determine if a String is an int or a double
+  public static String intOrDouble(String s){
+  for(int i = 0; i < s.length(); i++){
+    if(s.charAt(i) == '.'){
+      return "double";
+    }
+  }
+  return "int";
+  }
+
+  //Find the shortest palindrome in a String
+  public static String shortestPal(String s){
+    int i = 0;
+    int j = s.length()-1;
+
+    while(j>=0){
+      if(s.charAt(i) == s.charAt(j)){
+        i++;
+      }
+      j--;
+    }
+    if(i == s.length()){
+      return s;
+    }
+    String suffix = s.substring(i);
+    String prefix = new StringBuilder(suffix).reverse().toString();
+    String mid = shortestPalindrome(s.substring(0, i));
+    return prefix+mid+suffix;
   }
 }
