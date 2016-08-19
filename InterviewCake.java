@@ -1,3 +1,8 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Comparator;
 public class InterviewCake{
   public static void main(String[] args) {
     int[] stockPricesYesterday = {10, 7, 5, 8, 11, 9};
@@ -65,4 +70,50 @@ public class InterviewCake{
     }
     return highest_product_of_three;
   }
+
+  public class Meeting {
+
+  int startTime;
+  int endTime;
+
+  public Meeting(int startTime, int endTime) {
+      // number of 30 min blocks past 9:00 am
+      this.startTime = startTime;
+      this.endTime   = endTime;
+  }
+
+  public String toString() {
+      return String.format("(%d, %d)", startTime, endTime);
+  }
+}
+
+public static List<Meeting> condenseMeetingTimes(List<Meeting> meetings){
+  List<Meeting> sortedMeetings = new ArrayList<Meeting>(meetings);
+  Collections.sort(sortedMeetings, new Comparator<Meeting>(){
+    public int compare(Meeting one, Meeting two){
+      return one.startTime - two.startTime;
+    }
+  });
+
+  List<Meeting> mergedMeetings = new ArrayList<Meeting>();
+  mergedMeetings.add(sortedMeetings.get(0));
+
+  for(Meeting currentMeeting : sortedMeetings){
+    Meeting lastMergedMeeting = mergedMeetings.get(mergedMeetings.size() - 1);
+    if(isMergeable(lastMergedMeeting, currentMeeting)){
+      lastMergedMeeting.endTime = Math.max(lastMergedMeeting.endTime, currentMeeting.endTime);
+    }else{
+    mergedMeetings.add(currentMeeting);
+  }
+}
+return mergedMeetings;
+}
+
+public static boolean isMergeable(Meeting one, Meeting two){
+  if(one.endTime >= two.startTime){
+    return true;
+  }else{
+    return false;
+  }
+}
 }

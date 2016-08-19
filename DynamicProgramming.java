@@ -5,6 +5,9 @@ public class DynamicProgramming{
     System.out.println(bottomUpMinToOne(7));
     int[] m = new int[100];
     System.out.println(waysUpStairs(4,m));
+
+    int[] coins = {1,3,5};
+    System.out.println(coinSum(coins));
   }
   //On a positive integer, you can perform any one of the following 3 steps.
   //1.) Subtract 1 from it. ( n = n - 1 )
@@ -57,14 +60,34 @@ public class DynamicProgramming{
 //Imagine a robot sitting on the upper left corner of an X by Ygrid.
 //The robot can only move in two directions: right and down.
 //How many possible paths are there for the robot to go from (0, 0) to (X, Y) ?
-public static int roboPaths(int[][] grid){
-  if(validPath())
-}
+// public static int roboPaths(int[][] grid){
+//   if(validPath())
+// }
+//
+// public static boolean validPath(int x, int y, int gridHeight, int gridWidth){
+//   if(x + 1 > gridWidth || y + 1 > gridHeight){
+//     return false;
+//   }
+//   return true;
+// }
 
-public static boolean validPath(int x, int y, int gridHeight, int gridWidth){
-  if(x + 1 > gridWidth || y + 1 > gridHeight){
-    return false;
+//Given a list of N coins, their values (V1, V2, … , VN), and the total sum S.
+//Find the minimum number of coins the sum of which is S (we can use as many coins of one type as we want),
+//or report that it’s not possible to select coins in such a way that they sum up to S.
+public static int coinSum(int coins, int totalSum){
+  int[] minCoins = new int[totalSum];
+  for(int i = 0; i < totalSum; i++){ //setting all indices to "infinity"
+    minCoins[i] = null;
   }
-  return true;
+
+  min[0] = 0;
+  for(int j = 1; j <= totalSum; j++){
+    for(int k = 0; k < coins.length(); k++){
+      if(coins[k] <= j && minCoins[j - coins[k]] + 1 < minCoins[j]){
+        minCoins[j] = minCoins[j - coins[k]] + 1;
+      }
+    }
+  }
+  return minCoins[totalSum];
 }
 }
